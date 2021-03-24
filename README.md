@@ -1,3 +1,3 @@
 # SpringCourseUdemy
 
-Started Spring course by Chad Darby. Will upload source code as I progress.
+Started Spring course by Chad Darby. Will upload source code and notes as I progress.

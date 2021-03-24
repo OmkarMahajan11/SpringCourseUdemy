@@ -1,0 +1,18 @@
+Bean Scopes:
+singelton -> single shared instance of the bean
+prototype -> new bean instance for each container request
+request -> scoped to an HTTP web request
+session -> scoped to an HTTP web request
+global-session -> scoped to a global HTTP web session
+
+init-method and destroy-method -> no arg methods
+
+For "prototype" scoped beans, Spring does not call the destroy method. In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean
+
+To call the destroy method on Prototype beans:
+- Create custom processor, put it as a bean
+- prototype bean must implement DisposableBean interface
+
+add to config file -> <context:component-scan base-package="com.luv2code.springdemo"/>
+bean class -> @Component(<bean-id>)
+@Autowired -> any method to dependency injection
