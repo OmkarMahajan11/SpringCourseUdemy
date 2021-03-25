@@ -14,25 +14,53 @@ To call the destroy method on Prototype beans:
 - prototype bean must implement DisposableBean interface
 
 Annotations
-add to config file -> <context:component-scan base-package="com.luv2code.springdemo"/>
-bean class -> @Component(<bean-id>)
-@Autowired -> any method to dependency injection
-@Qualifier(<bean Id>) -> to specify which implementation @Autowired will inject
-(for constructor injection, You have to place the @Qualifier annotation inside of the constructor 
-arguments.
-ex:
-@Autowired
-public TennisCoach(@Qualifier("randomFortuneService") FortuneService theFortuneService))
-
-If the annotation's value doesn't indicate a bean name, an appropriate name will be built based on the 
-short name of the class (with the first letter lower-cased).
-ex: 
+- add to config file -> <context:component-scan base-package="com.luv2code.springdemo"/>
+- bean class -> @Component(<bean-id>)
+- @Autowired -> any method to dependency injection
+- @Qualifier(<bean Id>) -> to specify which implementation @Autowired will inject
+  (for constructor injection, You have to place the @Qualifier annotation inside of the constructor 
+  arguments).
+  ex:
+	@Autowired
+	public TennisCoach(@Qualifier("randomFortuneService") FortuneService theFortuneService))
+- read the config file and retrieve beans
+  ex.
+  	// load config file
+	ClassPathXmlApplicationContext context =
+				new ClassPathXmlApplicationContext("applicationContext.xml");	
+		
+	// retrieve bean from spring container
+	Coach theCoach = context.getBean("tennisCoach", Coach.class);	
+- If the annotation's value doesn't indicate a bean name, an appropriate name will be built based on the 
+  short name of the class (with the first letter lower-cased).
+  ex: 
 	HappyFortuneService -> happyFortuneService
 	RESTFortuneService --> RESTFortuneService
 	(No conversion since the first two characters are upper case.)
 
-to load from properties file:
-add to config file -> <context:property-placeholder location="classpath:sport.properties"/>
-This should appear just after the <context:component-scan .../> line
-@Value("foo.email")
+To load from properties file:
+	from config xml file
+	- add to config file -> <context:property-placeholder location="classpath:sport.properties"/>
+	- This should appear just after the <context:component-scan .../> line
+	from java config class
+	- @PropertySource("classpath:sport.properties")
+- field injection with @Value("foo.email")
 
+Lifecycle methods 
+	init method -> @PostConstruct
+	destroy method -> @PreDestroy
+- no-args methods
+- for java 9 and higher needs javax.annotation-api-1.3.2.jar	
+
+Configure Spring using Java class
+- create class and add @Configuration
+- add @ComponentScan("<package-name>")
+  (scans package and reads component classe to create beans)	
+- read the class and retrieve beans
+  ex.
+  	// read the spring config java class
+  	AnnotationConfigApplicationContext context =
+			new AnnotationConfigApplicationContext(SportConfig.class);
+		
+	// get the bean
+	Coach theCoach = context.getBean("swimCoach", Coach.class);
