@@ -1,10 +1,15 @@
 package com.luv2code.springdemo;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+//import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+//@Scope("prototype")
 public class TennisCoach implements Coach {
 	
 	// field injection
@@ -22,6 +27,18 @@ public class TennisCoach implements Coach {
 	
 	public TennisCoach() {
 		System.out.println(">> TennisCoach: inside default constructor");
+	}
+	
+	// init method
+	@PostConstruct
+	public void doStartupStuff() {
+		System.out.println(">> TennisCoach: inside doStartupStuff() method");
+	}
+	
+	// destroy method
+	@PreDestroy
+	public void doCleanupStuff() {
+		System.out.println(">> TennisCoach: inside doCleanupStuff() method");
 	}
 	
 	/*
@@ -49,4 +66,6 @@ public class TennisCoach implements Coach {
 	public String getDailyFortune() {
 		return fortuneService.getDailyFortune();
 	}
+	
+	
 }
