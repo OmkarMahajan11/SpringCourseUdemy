@@ -1,0 +1,41 @@
+- Framework for building MVC webapps
+
+Components:
+- set of webpages to layout UI components
+- collection of spring beans (controllers, services etc.)
+- spring configuration
+
+ 		-> front controller
+ 				| model
+				v
+Web			controller
+Browser			| model
+				v
+		<-	view template
+
+- Front controller is known as DispatcherServlet, alredy developed by 
+  spring dev team
+- Controller created by developer, has business logic, handles requests
+- Model stores/retrieves data via backend systems
+- View template:
+	JSP -> java server pages
+  	JSTL -> JSP standard tag library
+  	thymeleaf, groovy, velocity etc.
+
+Configuration
+1. WEB-INF/web.xml
+	- add dispatcher inside <servlet> 
+	- add servlet mapping and url pattern
+2. spring-mvc-demo-servle.xml
+	- add support for component scanning
+	  <context:component-scan base-package="<package name>">
+	- add support for conversion, mapping and validation
+	  <mvc:annotation-driven/>
+	- define spring mvc view resolver (prefix, suffix)
+
+Controller
+1. Create controller class use @Controller
+2. define controller method use @RequestMapping("<url path>") return view 
+   page name (spring appends suffix and prefix to it)
+3. develop view page
+
